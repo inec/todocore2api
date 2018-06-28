@@ -12,7 +12,7 @@ namespace TodoWebApi.Controllers
 		[HttpGet]
 		public string Get()
 		{
-			return "TodoWebApi v1";
+			return "TodoWebApi v1 v1 path";
 		}
 	}
 }
