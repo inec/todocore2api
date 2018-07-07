@@ -26,7 +26,16 @@ namespace todo_core_webapi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+
+            var todoRepository = new todo_core_webapi.Data.InMemory.TodoRepository();
+
+			services.AddSingleton(typeof(todo_core_webapi.Data.ITodoRepository), todoRepository);
+
+			services.AddMvc()
+					.AddJsonOptions(opt => {
+						opt.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+					});
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,9 +45,17 @@ namespace todo_core_webapi
             {
                 app.UseDeveloperExceptionPage();
             }
- //app.UseStaticFiles();
- 	//app.MapWhen(context => context.Request.Method == HttpMethod.Options.ToString(), OptionsMiddleware);
+ app.UseDefaultFiles();
+    app.UseStaticFiles();
+ 	app.MapWhen(context => context.Request.Method == HttpMethod.Options.ToString(), OptionsMiddleware);
             app.UseMvc();
         }
+        private static void OptionsMiddleware(IApplicationBuilder app)
+		{
+			app.Run(async context =>
+			{
+				await context.Response.WriteAsync("");
+			});
+		}
     }
 }
