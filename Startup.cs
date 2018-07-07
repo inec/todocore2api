@@ -11,6 +11,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.EntityFrameworkCore;
+using MvcMovie.Models;
 
 namespace todo_core_webapi
 {
@@ -35,6 +37,11 @@ namespace todo_core_webapi
 					.AddJsonOptions(opt => {
 						opt.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
 					});
+
+                     services.AddDbContext<MvcMovieContext>(options =>
+                  options.UseSqlite("Data Source=MvcMovie.db"));
+
+
            
         }
 
@@ -48,7 +55,14 @@ namespace todo_core_webapi
  app.UseDefaultFiles();
     app.UseStaticFiles();
  	app.MapWhen(context => context.Request.Method == HttpMethod.Options.ToString(), OptionsMiddleware);
-            app.UseMvc();
+            app.UseMvc(routes =>
+{
+    routes.MapRoute(
+        name: "default",
+        template: "{controller=Home}/{action=Index}/{id?}");
+});
+
+           //  services.AddDbContext<MvcMovieContext>(options =>                  options.UseSqlite("Data Source=MvcMovie.db"));
         }
         private static void OptionsMiddleware(IApplicationBuilder app)
 		{
