@@ -2,6 +2,8 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
+		<script src="https://unpkg.com/vue"></script>
+		<script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Template • TodoMVC</title>
 		<link rel="stylesheet" href="assets/css/base.css">
@@ -10,8 +12,9 @@
 	</head>
 	<body>
 		<section class="todoapp">
-				<script src="https://unpkg.com/vue"></script>
-				<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+			
+
+			<!--	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>-->
 				<div id="app">
 						<p>a-{{ message }}</p>
 					  </div>
@@ -20,7 +23,7 @@ console.log('tt');
 new Vue({
 		el: '#app',
 		data: {
-		  message: 'Hello Vue.js!'
+		  message: 'L-26 Hello Vue.js!'
 		},
   mounted () {
     axios
@@ -58,6 +61,22 @@ new Vue({
 						</div>
 						<input class="edit" value="Rule the web">
 					</li>
+					<li v-for="todo in filteredTodos"
+                    class="todo"
+                    :key="todo.id"
+                    :class="{ completed: todo.completed, editing: todo == editedTodo }">
+                    <div class="view">
+                        <input class="toggle" type="checkbox" v-model="todo.completed">
+                        <label @dblclick="editTodo(todo)">{{ todo.title }}</label>
+                        <button class="destroy" @click="removeTodo(todo)"></button>
+                    </div>
+                    <input class="edit" type="text"
+                           v-model="todo.title"
+                           v-todo-focus="todo == editedTodo"
+                           @blur="doneEdit(todo)"
+                           @keyup.enter="doneEdit(todo)"
+                           @keyup.esc="cancelEdit(todo)">
+                </li>
 				</ul>
 			</section>
 			<!-- This footer should hidden by default and shown when there are todos -->
@@ -88,5 +107,6 @@ new Vue({
 			<p>Created by <a href="http://todomvc.com">you</a></p>
 			<p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
 		</footer>
+		<script src="todomvc.js"></script>
 	</body>
 </html>
