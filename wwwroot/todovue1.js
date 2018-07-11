@@ -2,23 +2,59 @@ console.log('tt');
 new Vue({
 		el: '#app',
 		data: {
-         todos: [ { "id": 1, "order": 2, "title": "tst332", "url": "http://localhost:5000/v1/todos/1", "completed": false }, { "id": 2, "order": 2, "title": "tst2", "url": "http://localhost:5000/v1/todos/2", "completed": false } ],
-
+       editedTodo: null,
+        newTodo: '',
+         //todos: [ { "id": 1, "order": 2, "title": "tst332", "url": "http://localhost:5000/v1/todos/1", "completed": false }, { "id": 2, "order": 2, "title": "tst2", "url": "http://localhost:5000/v1/todos/2", "completed": false } ],
+         todos:[],
            message: 'L-26 Hello Vue.js!'
         },
-  created: function () {
-    // `this` points to the vm instance
-    Vue.http.get("/v1/todos").then(response => {
-       // this.todos = response.body;
-    });
-    console.log('a is: ' + this.todos.length)
-  },computed: {
-    filteredTodos: function () {
-      return filters[this.visibility](this.todos)
-    }},
-  mounted () {
-    axios
-     .get('/v1/todos')
-     .then(response => (this.message  = response.data)) // .get('https://api.coindesk.com/v1/bpi/currentprice.json')
-  }
-	  })
+
+  // watch todos change for localStorage persistence
+  watch: {
+    todos: {
+      handler: function (todos) {
+        /*todos.forEach(todo => {
+          console.log(todo)
+        });*/
+       // console.log(todos)
+       console.log(JSON.stringify(todos.slice(-1)[0].title ));
+
+       axios.post("/v1/Todos", {title: todos.slice(-1)[0].title})
+       .then(() => { // persist all changes to backend
+       console.log("saved to server")
+   });
+     /* axios.post("/v1/Todos", {title: "tst2", order: 2, completed: false})
+          .then(() => { // persist all changes to backend
+          console.log("saved to server")
+      });*/
+      },
+
+      deep: true
+    }
+  },
+    // methods that implement data logic.
+    // note there's no DOM manipulation here at all.
+    methods: {
+        editTodo: function (todo) {
+          this.beforeEditCache = todo.title
+          this.editedTodo = todo
+        },
+        addTodo: function () {
+            var value = this.newTodo && this.newTodo.trim();
+            if (!value) {
+                return
+            }
+            this.todos.push({
+                id: new Date().getTime(),
+                title: value,
+                completed: false
+            });
+            this.newTodo = ''
+        }
+      }, mounted() {
+          axios.get('/v1/todos')
+          .then(response => (this.todos  = response.data))
+        }
+        
+      });
+   
