@@ -5,7 +5,7 @@ new Vue({
        editedTodo: null,
         newTodo: '',
          //todos: [ { "id": 1, "order": 2, "title": "tst332", "url": "http://localhost:5000/v1/todos/1", "completed": false }, { "id": 2, "order": 2, "title": "tst2", "url": "http://localhost:5000/v1/todos/2", "completed": false } ],
-         todos:[],
+         todos: JSON.parse(localStorage.getItem("todos")) || [],
            message: 'L-26 Hello Vue.js!'
         },
 
@@ -13,20 +13,13 @@ new Vue({
   watch: {
     todos: {
       handler: function (todos) {
-        /*todos.forEach(todo => {
-          console.log(todo)
-        });*/
-       // console.log(todos)
-       console.log(JSON.stringify(todos.slice(-1)[0].title ));
 
+       console.log(JSON.stringify(todos.slice(-1)[0].title ));
+      // localStorage.setItem("todos", JSON.stringify(todos))
        axios.post("/v1/Todos", {title: todos.slice(-1)[0].title})
        .then(() => { // persist all changes to backend
-       console.log("saved to server")
-   });
-     /* axios.post("/v1/Todos", {title: "tst2", order: 2, completed: false})
-          .then(() => { // persist all changes to backend
-          console.log("saved to server")
-      });*/
+            console.log("saved to server")         });
+
       },
 
       deep: true
