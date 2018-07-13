@@ -119,8 +119,19 @@ new Vue({
     // note there's no DOM manipulation here at all.
     methods: {
         editTodo: function (todo) {
+          console.log("edit");
           this.beforeEditCache = todo.title
           this.editedTodo = todo
+        },
+        doneEdit: function (todo) {
+          if (!this.editedTodo) {
+            return
+          }
+          this.editedTodo = null
+          todo.title = todo.title.trim()
+          if (!todo.title) {
+            this.removeTodo(todo)
+          }
         },
         setNewTodo (e) {
          store.dispatch('setNewTodo', e.target.value)
@@ -136,10 +147,17 @@ new Vue({
           store.dispatch('removeTodo', todo)
         }
 
-      }, mounted() {
+    },
+    directives: {
+      'todo-focus': function (el, binding) {
+        if (binding.value) {
+          el.focus()
+        }
+      }
+    }/*, mounted() {
           axios.get('/v1/todos')
           .then(response => (this.todos  = response.data))
-        }
+        }*/
         
       });
       window.app = app
