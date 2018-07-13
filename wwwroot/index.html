@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<script src="https://unpkg.com/vue"></script>
 		<!--<script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>-->
-		<script src="https://unpkg.com/vuex"></script>
+	
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Template • TodoMVC</title>
 		<link rel="stylesheet" href="assets/css/base.css">
@@ -26,11 +26,7 @@
 				
 			<header class="header">
 				<h1>todos</h1>
-				<!--<input class="new-todo"
-      autofocus autocomplete="off"
-      placeholder="What needs to be done?"
-      v-model="newTodo"
-	  @keyup.enter="addTodo">-->
+
 	  <input class="new-todo"
 	  autofocus autocomplete="off"
 	  placeholder="What needs to be done?"
@@ -65,19 +61,14 @@
 					<li v-for="todo in todos"
 					class="todo"
 					:key="todo.id"
-					:class="{ completed: todo.completed, editing: todo == editedTodo }">
+					:class="{ completed: todo.completed }">
 					<div class="view">
 					  <input class="toggle" type="checkbox" v-model="todo.completed">
-					  <label @dblclick="editTodo(todo)">{{ todo.title }} --- {{todos.length}}</label>
+					  <label>{{ todo.title }}</label>
 					  <button class="destroy" @click="removeTodo(todo)"></button>
 					</div>
-					<input class="edit" type="text"
-					  v-model="todo.title"
-					 
-					  @blur="doneEdit(todo)"
-					  @keyup.enter="doneEdit(todo)"
-					  @keyup.esc="cancelEdit(todo)">
-				  </li><li>n-{{todos.length}}</li>
+				  </li>
+				  <li>n-{{todos.length}}</li>
 				</ul>
 			</section>
 			<!-- This footer should hidden by default and shown when there are todos -->
@@ -108,7 +99,10 @@
 			<p>Created by <a href="http://todomvc.com">you</a></p>
 			<p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
 		</footer>
+
 	</div>
-		<script src="todovue1.js"></script>
+	<script src="https://unpkg.com/babel-polyfill@latest/dist/polyfill.min.js"></script>
+	<script src="https://unpkg.com/vuex"></script>
+	<script src="todovue1.js"></script>
 	</body>
 </html>

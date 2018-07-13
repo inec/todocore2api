@@ -1,9 +1,6 @@
+(function () {
+  Vue.use(Vuex)
 
-function randomId () {
-  return Math.random()
-    .toString()
-    .substr(2, 10)
-}
 
   const store = new Vuex.Store({
     state: {
@@ -45,6 +42,7 @@ function randomId () {
           .then(r => r.data)
           .then(todos => {
             commit('SET_TODOS', todos)
+            commit('SET_LOADING', false)
           })
       },
       addTodo ({ commit, state }) {
@@ -52,9 +50,10 @@ function randomId () {
           // do not add empty todos
           return
         }
-        console.log(state)
+
         const todo = {
           title: state.newTodo,
+          //id:randomId(),
           completed: false
         }
        
@@ -80,16 +79,25 @@ function randomId () {
 
 
 new Vue({
-		el: '#app',
+    el: '#app',
+    store,
 		data: {
        editedTodo: null,
-        newTodo: '',
+       // newTodo: '',
          //todos: [ { "id": 1, "order": 2, "title": "tst332", "url": "http://localhost:5000/v1/todos/1", "completed": false }, { "id": 2, "order": 2, "title": "tst2", "url": "http://localhost:5000/v1/todos/2", "completed": false } ],
-         todos: JSON.parse(localStorage.getItem("todos")) || [],
+       //  todos:  [],
            message: 'L-26 Hello Vue.js!'
         },
         created () {
-          this.$store.dispatch('loadTodos')
+          store.dispatch('loadTodos')
+        },
+        computed: {
+          newTodo () {
+            return this.$store.getters.newTodo
+          },
+          todos () {
+            return this.$store.getters.todos
+          }
         },
   // watch todos change for localStorage persistence
  /* watch: {
@@ -122,27 +130,17 @@ new Vue({
           e.target.value = ''
           //this.$
           store.dispatch('addTodo')
-          //this.$store.dispatch('clearNewTodo')
+          store.dispatch('clearNewTodo')
         },
         removeTodo (todo) {
-          this.$store.dispatch('removeTodo', todo)
+          store.dispatch('removeTodo', todo)
         }
-        /*addTodo: function () {
-            var value = this.newTodo && this.newTodo.trim();
-            if (!value) {
-                return
-            }
-            this.todos.push({
-                id: new Date().getTime(),
-                title: value,
-                completed: false
-            });
-            this.newTodo = ''
-        }*/
+
       }, mounted() {
           axios.get('/v1/todos')
           .then(response => (this.todos  = response.data))
         }
         
       });
-   
+      window.app = app
+    })() 
