@@ -47,7 +47,7 @@ function randomId () {
             commit('SET_TODOS', todos)
           })
       },
-      addTodo ({  state }) {
+      addTodo ({ commit, state }) {
         if (!state.newTodo) {
           // do not add empty todos
           return
@@ -59,13 +59,13 @@ function randomId () {
           id: randomId()
         }
        
-        axios.post('/v1/todos',  {title: "sdf"}).then(_ => {
+        axios.post('/v1/todos', todo).then(_ => {
           commit('ADD_TODO', todo)
         })
       },
       setNewTodo () {
-        console.log("L-66")
-        commit('SET_NEW_TODO', todo)
+        console.log("action L-66")
+        store.commit('SET_NEW_TODO',"TTTT")
       },
       removeTodo ({ commit }, todo) {
         axios.delete(`/v1/todos/${todo.id}`).then(_ => {
