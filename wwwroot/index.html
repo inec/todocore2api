@@ -35,6 +35,7 @@
 	  @keyup.enter="addTodo"
 	  >
 			</header>
+			<input class="edit" value="Rule the web"  	v-model="editedTodo.title">
 			<!-- This section should be hidden by default and shown when there are todos -->
 			<section class="main" v-show="todos.length" v-cloak>
 				<input class="toggle-all" type="checkbox">
@@ -50,19 +51,20 @@
 						</div>
 						<input class="edit" value="Create a TodoMVC template">
 					</li>
-					<li>
+
+					<li>	
 						<div class="view">
 							<input class="toggle" type="checkbox">
 							<label>Buy a unicorn</label>
 							<button class="destroy"></button>
 						</div>
-						<input class="edit" value="Rule the web">
+					
 					</li>
 					<li v-for="todo in todos"
 					class="todo"
 					:key="todo.id"
 					:class="{ completed: todo.completed }">
-					
+
 					<div class="view">
 						<input class="toggle" type="checkbox" v-model="todo.completed">
 						<label @dblclick="editTodo(todo)">{{ todo.title }}</label>

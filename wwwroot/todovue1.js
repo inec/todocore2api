@@ -82,7 +82,7 @@ new Vue({
     el: '#app',
     store,
 		data: {
-       editedTodo: null,
+       editedTodo: [],
        // newTodo: '',
          //todos: [ { "id": 1, "order": 2, "title": "tst332", "url": "http://localhost:5000/v1/todos/1", "completed": false }, { "id": 2, "order": 2, "title": "tst2", "url": "http://localhost:5000/v1/todos/2", "completed": false } ],
        //  todos:  [],
@@ -127,7 +127,7 @@ new Vue({
           if (!this.editedTodo) {
             return
           }
-          this.editedTodo = null
+          this.editedTodo = []
           todo.title = todo.title.trim()
           if (!todo.title) {
             this.removeTodo(todo)
