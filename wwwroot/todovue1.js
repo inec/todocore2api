@@ -55,17 +55,16 @@ function randomId () {
         console.log(state)
         const todo = {
           title: state.newTodo,
-          completed: false,
-          id: randomId()
+          completed: false
         }
        
         axios.post('/v1/todos', todo).then(_ => {
           commit('ADD_TODO', todo)
         })
       },
-      setNewTodo () {
+      setNewTodo ({ commit }, todo) {
         console.log("action L-66")
-        store.commit('SET_NEW_TODO',"TTTT")
+        store.commit('SET_NEW_TODO',todo)
       },
       removeTodo ({ commit }, todo) {
         axios.delete(`/v1/todos/${todo.id}`).then(_ => {
