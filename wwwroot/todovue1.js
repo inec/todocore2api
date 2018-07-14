@@ -117,11 +117,12 @@ new Vue({
     // note there's no DOM manipulation here at all.
     methods: {
         editTodo: function (todo) {
-          console.log("edit");
+          console.log("L120 editTodo");
           this.beforeEditCache = todo.title
           this.editedTodo = todo
         },
         doneEdit: function (todo) {
+          console.log("L-125 doneEdit id:- "+todo.id+" - "+ todo.title );
           if (!this.editedTodo) {
             return
           }
@@ -129,6 +130,8 @@ new Vue({
           todo.title = todo.title.trim()
           if (!todo.title) {
             this.removeTodo(todo)
+          }else{
+            console.log("L-135 doneEdit id:- "+todo.id+" title- "+ todo.title );
           }
         },
         setNewTodo (e) {

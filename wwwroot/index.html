@@ -35,7 +35,9 @@
 	  @keyup.enter="addTodo"
 	  >
 			</header>
-			<input class="edit" value="Rule the web"  	v-model="editedTodo.title">
+			<input class="edit" value="Rule the web"  	v-model="editedTodo.title"
+			@keyup.enter="doneEdit(editedTodo)"
+			>
 			<!-- This section should be hidden by default and shown when there are todos -->
 			<section class="main" v-show="todos.length" v-cloak>
 				<input class="toggle-all" type="checkbox">
@@ -80,7 +82,7 @@
 					@keyup.esc="cancelEdit(todo)">
 
 				  </li>
-				  <li>n-{{todos.length}}</li>
+				  <li>L83-{{todos.length}}</li>
 				</ul>
 			</section>
 			<!-- This footer should hidden by default and shown when there are todos -->
