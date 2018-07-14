@@ -30,6 +30,10 @@
         var todos = state.todos
         todos.splice(todos.indexOf(todo), 1)
       },
+      EDIT_TODO (state, { todo, text = todo.text, done = todo.done }) {
+        todo.text = text
+        todo.done = done
+      },
       CLEAR_NEW_TODO (state) {
         state.newTodo = ''
         console.log('clearing new todo')
@@ -64,6 +68,12 @@
       setNewTodo ({ commit }, todo) {
         console.log("action L-66")
         store.commit('SET_NEW_TODO',todo)
+      },
+      editTodo ({ commit }, { todo, value }) {
+        axios.put(`/v1/todos/${todo.id}`).then(_ => {
+        console.log("action edit L-73")
+        commit('EDIT_TODO', { todo, text: value })
+      })
       },
       removeTodo ({ commit }, todo) {
         axios.delete(`/v1/todos/${todo.id}`).then(_ => {
@@ -132,6 +142,7 @@ new Vue({
             this.removeTodo(todo)
           }else{
             console.log("L-135 doneEdit id:- "+todo.id+" title- "+ todo.title );
+            store.dispatch(('doneEdit', todo))
           }
         },
         setNewTodo (e) {
