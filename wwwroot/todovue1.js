@@ -83,9 +83,7 @@ new Vue({
     store,
 		data: {
        editedTodo: [],
-       // newTodo: '',
          //todos: [ { "id": 1, "order": 2, "title": "tst332", "url": "http://localhost:5000/v1/todos/1", "completed": false }, { "id": 2, "order": 2, "title": "tst2", "url": "http://localhost:5000/v1/todos/2", "completed": false } ],
-       //  todos:  [],
            message: 'L-26 Hello Vue.js!'
         },
         created () {
