@@ -57,7 +57,7 @@ namespace todo_core_webapi.Controllers
 			m_todoRepository.Clear();
 		}
 
-		[HttpPatch("{id}")]
+		[HttpPut("{id}")]
 		public async Task<IActionResult>Patch([FromBody]Todo todo, int id)
 		{
 			var updatedTodo = await m_todoRepository.Update(id, todo);

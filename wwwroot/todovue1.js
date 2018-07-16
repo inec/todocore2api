@@ -141,7 +141,7 @@ new Vue({
           if (!todo.title) {
             this.removeTodo(todo)
           }else{
-            console.log("L-135 doneEdit id:- "+todo.id+" title- "+ todo.title );
+            //console.log("L-135 doneEdit id:- "+todo.id+" title- "+ todo.title );
             store.dispatch(('doneEdit', todo))
           }
         },
