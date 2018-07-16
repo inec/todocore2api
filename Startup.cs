@@ -38,10 +38,11 @@ namespace todo_core_webapi
 						opt.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
 					});
 
-                     services.AddDbContext<MvcMovieContext>(options =>
+             services.AddDbContext<MvcMovieContext>(options =>
                   options.UseSqlite("Data Source=MvcMovie.db"));
 
-
+            //services.AddDbContext<TodoContext>(opt => 
+               // opt.UseInMemoryDatabase("TodoList"));
            
         }
 
