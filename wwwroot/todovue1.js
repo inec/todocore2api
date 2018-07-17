@@ -132,7 +132,7 @@ new Vue({
           this.editedTodo = todo
         },
         doneEdit: function (todo) {
-          console.log("L-125 doneEdit id:- "+todo.id+" - "+ todo.title );
+          //console.log("L-125 doneEdit id:- "+todo.id+" - "+ todo.title );
           if (!this.editedTodo) {
             return
           }
