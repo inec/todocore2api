@@ -8,7 +8,7 @@ namespace todo_core_webapi.Data.Interfaces
 IEnumerable<T> GetAll();
           //  Task<IEnumerable<T>> GetAll();
 
-		Task<T> Get(int id);
+		//Task<T> Get(int id);
 
 		Task<Todo> Add(Todo todo);
 
